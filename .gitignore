@@ -1,0 +1,27 @@
+# Godot
+.godot/
+/android/
+
+# Build outputs
+build/
+export/
+*.pck
+*.zip
+
+# IDE
+.idea/
+.vscode/
+.zed/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs and local data
+*.log
+*.db
+*.sqlite
+
+# Environment
+.env*
+!.env.example

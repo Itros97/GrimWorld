@@ -1,0 +1,27 @@
+name: Publish documents
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: akrck02/papiro-deploy@main
+        with:
+          title: "GrimWorld"
+          description: "A game made with Godot."
+          accent: "#7A4FA3"
+          path: "./docs"
+          isObsidianProject: false
+          showFooter: true
+          showBreadcrumb: true
+          showStartPage: true
+      - name: Deploy to github pages 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: .
