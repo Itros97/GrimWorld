@@ -2,8 +2,8 @@
 
 # GrimWorld
 
-**A game made with Godot.**
-It runs in the Godot 4.7 editor and needs nothing else installed.
+**A narrative idle game where you wake up in the dark, at the top of an unfinished skyscraper.**
+This is the Godot 4.7 prototype that validates the design before the engine is extracted. It needs only Godot.
 
 ![Godot](https://img.shields.io/badge/Godot-4.7-478CBF?logo=godotengine&logoColor=white)
 ![Status](https://img.shields.io/badge/status-in%20development-orange)
@@ -20,7 +20,8 @@ AI assistant (Claude, by Anthropic) under my direction, in October 2026.** I dec
 and how it should behave; the AI wrote the project skeleton, the code, the tests and the docs.
 Every commit made this way carries a `Co-Authored-By: Claude` line.
 
-**Status: pending thorough review.** So far only the empty project exists; it opens in Godot 4.7.
+**Status: pending thorough review.** Phase 1 (lighting the lighter) runs in Godot 4.7.2 and its 25 engine
+and data tests pass.
 I have not yet reviewed it line by line. Treat it as a working draft, not as code I vouch for.
 
 > ⚠️ **Warning:** an early experiment, **not ready to play**. Everything will change.
@@ -33,16 +34,21 @@ I have not yet reviewed it line by line. Treat it as a working draft, not as cod
 git clone https://github.com/Itros97/GrimWorld.git
 cd GrimWorld
 godot --editor --path .    # open the project in the Godot editor
-godot --path .             # run the game
+godot --path .             # run the game with a random seed
+godot --path . -- --seed=42    # run the game with a fixed seed
+godot --headless --import && godot --headless -s tests/run_tests.gd    # run the tests
 ```
 
-[More on the project →](docs/01-overview.md)
+[More on the architecture →](docs/01-overview.md)
 
 ## 📚 Documentation
 
 | | |
 |---|---|
-| [Overview](docs/01-overview.md) | What GrimWorld is and how the project is laid out. |
+| [Overview](docs/01-overview.md) | What GrimWorld is, its architecture and how the project is laid out. |
+| [Game design](docs/02-game-design.md) | Setting, progression, sanity, hidden backgrounds and failure modes (Spanish). |
+| [Domain model](docs/03-domain.md) | Engine state, events and the flow of an action (Spanish). |
+| [Decision records](docs/04-adr/0002-lenguaje-go.md) | Why the engine will be written in Go (Spanish). |
 
 [Read the docs online →](https://itros97.github.io/GrimWorld/)
 

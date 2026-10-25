@@ -1,0 +1,21 @@
+{
+	"start_message": "dark",
+	"messages": {
+		"dark": "Está oscuro.",
+		"lighter_lit": "Una tenue llama naranja ilumina vagamente la sala. Estás solo, pero hay madera.",
+		"lighter_fail_1": "La rueda gira, pero no salta la chispa.",
+		"lighter_fail_2": "Una chispa breve. Nada más.",
+		"lighter_fail_3": "El pulgar resbala sobre la piedra.",
+		"lighter_fail_4": "Chasquido. Sigue oscuro."
+	},
+	"actions": [
+		{
+			"id": "light_lighter",
+			"label": "Encender mechero",
+			"chance": 0.25,
+			"unavailable_if_flag": "lighter_lit",
+			"success": { "flag": "lighter_lit", "message": "lighter_lit" },
+			"failure_messages": ["lighter_fail_1", "lighter_fail_2", "lighter_fail_3", "lighter_fail_4"]
+		}
+	]
+}

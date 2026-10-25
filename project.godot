@@ -11,4 +11,13 @@ config_version=5
 [application]
 
 config/name="GrimWorld"
+run/main_scene="res://ui/main_screen.tscn"
 config/features=PackedStringArray("4.7")
+
+[autoload]
+
+GameManager="*res://managers/game_manager.gd"
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0.02, 0.02, 0.02, 1)
