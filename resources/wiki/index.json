@@ -1,1 +1,1 @@
-{"type":1,"path":"/","files":{"overview":{"type":2,"path":"overview.html","files":{},"order":1}}}
+{"type":1,"path":"/","files":{"adr":{"type":1,"path":"adr","files":{"0001-lenguaje-rust":{"type":2,"path":"0001-lenguaje-rust.html","files":{}},"0002-lenguaje-go":{"type":2,"path":"0002-lenguaje-go.html","files":{}}},"order":4},"domain":{"type":2,"path":"domain.html","files":{},"order":3},"game-design":{"type":2,"path":"game-design.html","files":{},"order":2},"overview":{"type":2,"path":"overview.html","files":{},"order":1}}}

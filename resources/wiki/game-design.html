@@ -1,0 +1,197 @@
+<h1 id="juego-de-demo-diseño-borrador">Juego de demo — diseño (borrador)</h1>
+
+<hr>
+
+<p>Juego de demo del motor. Estilo A Dark Room: revelación progresiva, decisiones con riesgo y misterio.</p>
+
+<h2 id="premisa">Premisa</h2>
+
+<p>Despiertas a oscuras, de noche cerrada, en un penthouse vacío de un rascacielos a medio construir,
+en un mundo post-apocalíptico. Nadie llegó a vivir ahí. No sabes quién eres ni por qué estás ahí.
+Nunca se explica directamente.</p>
+
+<h2 id="escenario">Escenario</h2>
+
+<ul>
+<li>Un macro-barrio gigante en construcción (inspirado en las ciudades fantasma de promotoras quebradas, p. ej. Ocean Flower Island),
+ficticio y con nombre propio: torres de lujo a medio acabar, hoteles y centros comerciales sin estrenar, grúas paradas.</li>
+<li>Además, un apocalipsis misterioso que nunca se explica directamente. El jugador no sabe qué vino antes:
+¿se abandonó la obra por el apocalipsis, o el apocalipsis empezó aquí?</li>
+</ul>
+
+<h2 id="arco">Arco</h2>
+
+<p><strong>Solo y a oscuras → refugio → bastión con comunidad.</strong></p>
+
+<ol>
+<li>Penthouse: conseguir luz.</li>
+<li>Rascacielos: explorar plantas (unas acabadas, otras en obra, sin paredes, andamios). Progresión vertical:
+bajar a por recursos, asegurar plantas, la azotea como objetivo.</li>
+<li>Bastión: convertir plantas en huerto, taller, dormitorios&hellip; para la gente que llega.</li>
+</ol>
+
+<h2 id="inicio-v1">Inicio (v1)</h2>
+
+<ol>
+<li><strong>Oscuridad.</strong> Única acción: <em>Encender mechero</em> (25 % de éxito; varios textos de fallo).</li>
+<li><strong>Llama.</strong> <em>&ldquo;Una tenue llama naranja ilumina vagamente la sala. Estás solo, pero hay madera.&rdquo;</em>
+La llama dura un número limitado de decisiones.</li>
+<li><strong>Lootear con decisiones.</strong> Cada punto del penthouse (cocina sin estrenar, cajas de obra, plásticos de protección, hueco del ascensor&hellip;)
+gasta llama y tiene resultados ponderados con riesgo. Un punto looteado se vacía.</li>
+<li><strong>Se apaga la llama.</strong> Al soltar el mechero hay un % de que se rompa.</li>
+<li><strong>Mechero roto.</strong> <em>Buscar a oscuras</em>: probabilidad baja, cuesta cordura y tiene riesgos.
+Puede dar otra fuente de fuego (cerillas, piedras&hellip;).</li>
+<li><strong>Antorcha</strong> = madera + tela + alcohol → luz estable. Empieza la siguiente fase: explorar el edificio.</li>
+</ol>
+
+<h2 id="moverse-entre-plantas">Moverse entre plantas</h2>
+
+<ul>
+<li>Por el <strong>hueco del ascensor</strong>: rapel a la planta de abajo o de arriba. Ambas son otros penthouses.</li>
+<li>Requiere cuerda (crafteo o loot) y tiene riesgo (caída, pérdida de cordura).</li>
+<li>Cada planta es una localización con sus propios puntos de loot, flags y estado.</li>
+<li><strong>Arriba</strong>: más seguro, hacia la azotea. Se oye una voz por radio (pistas del misterio, posible contacto).
+Si investigas, encuentras un militar muerto: pistola Beretta 92 con pocas balas y escopeta de corredera con 2 cartuchos.
+La munición es escasa y no se recupera fácilmente.</li>
+<li><strong>Abajo</strong>: más recursos y más peligro. Se oyen rugidos y voces (¿criaturas?, ¿supervivientes hostiles?, ¿ambos?).</li>
+</ul>
+
+<h2 id="trasfondo-oculto">Trasfondo oculto</h2>
+
+<ul>
+<li>Al iniciar, se asigna un trasfondo al azar (con semilla). El jugador no lo elige ni lo ve.</li>
+<li>Da perks pasivas ocultas que el jugador nota en el juego y que una pista acaba confirmando.</li>
+<li>Los perks son modificadores en datos sobre probabilidades, costes y textos.</li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th>Trasfondo</th>
+<th>Perks</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Policía</td>
+<td>Mejor en conversaciones; investigador: más probabilidad de encontrar e interpretar pistas; sabe usar la radio y sus frecuencias</td>
+</tr>
+
+<tr>
+<td>Militar</td>
+<td>Nervios de acero; puntería ×1,5; sabe usar la radio y sus frecuencias</td>
+</tr>
+
+<tr>
+<td>Constructor</td>
+<td>Recolectar ×1,5; más éxito al construir</td>
+</tr>
+
+<tr>
+<td>Chef</td>
+<td>Encontrar comestibles ×1,25; convierte comida mala o mediocre en buena y comestible</td>
+</tr>
+
+<tr>
+<td>Ingeniero</td>
+<td>Obtener electrónica ×1,25; desmontar objetos; más éxito construyendo objetos electrónicos (radio, generadores&hellip;)</td>
+</tr>
+
+<tr>
+<td>Enfermero</td>
+<td>Pierde menos cordura; recupera más descansando; cura heridas propias y de otros (propuesta)</td>
+</tr>
+
+<tr>
+<td>Vagabundo</td>
+<td>Sigilo: menos ruido y menos peligros al lootear; encuentra recursos donde otros no ven nada; aguanta mejor el hambre y la oscuridad (propuesta)</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="cordura">Cordura</h2>
+
+<ul>
+<li>Baja más rápido a oscuras y al asumir riesgos; más despacio con luz.</li>
+<li>Sube descansando (con luz y seguridad), comiendo y hablando con gente.</li>
+<li>A 0: te desmayas y despiertas a oscuras con menos recursos y algo de cordura (sin reinicio total).</li>
+</ul>
+
+<h2 id="misterio">Misterio</h2>
+
+<ul>
+<li>Pistas fragmentadas: planos de la obra con anotaciones, un cartel de venta de los penthouses, una tarjeta de acceso,
+partes de obra interrumpidos, radio, periódicos. Más adelante, edificios cercanos (p. ej. una comisaría) con más pistas.</li>
+<li>Cada pista es un flag; ciertas combinaciones desbloquean escenas de recuerdo.</li>
+<li>Ambigüedad: ¿culpable o víctima? Se mantiene hasta tarde.</li>
+</ul>
+
+<h2 id="lo-que-exige-al-motor-v1">Lo que exige al motor (v1)</h2>
+
+<ul>
+<li>Recursos e inventario.</li>
+<li>Acciones con coste, cooldown y probabilidad (RNG con semilla en el estado).</li>
+<li>Estado que se agota (llama, durabilidad, cordura) y drenaje por tick según contexto.</li>
+<li>Opciones con resultados ponderados.</li>
+<li>Flags (puntos looteados, pistas, peligro).</li>
+<li>Recetas de crafteo.</li>
+<li>Localizaciones conectadas (plantas) con estado propio y transiciones con requisitos y riesgo.</li>
+<li>Condiciones de desbloqueo (<code>recurso &gt;= N</code>, flags, elecciones previas).</li>
+<li>Escenas de texto y condición de &ldquo;derrota&rdquo; (desmayo) como efectos en datos.</li>
+</ul>
+
+<h2 id="modos-de-fallo">Modos de fallo</h2>
+
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>¿Qué pasa si…?</th>
+<th>¿Qué debe ocurrir?</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>FM-01</td>
+<td>el mechero se rompe sin antorcha</td>
+<td><em>Buscar a oscuras</em> siempre disponible, con coste de cordura</td>
+</tr>
+
+<tr>
+<td>FM-02</td>
+<td>se vacían los puntos de loot sin los 3 ingredientes</td>
+<td>queda al menos una fuente (a oscuras o reaparición)</td>
+</tr>
+
+<tr>
+<td>FM-03</td>
+<td>se gasta la madera antes de craftear</td>
+<td>se puede volver a conseguir</td>
+</tr>
+
+<tr>
+<td>FM-04</td>
+<td>la cordura llega a 0</td>
+<td>desmayo: despiertas a oscuras con menos recursos</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="invariantes">Invariantes</h2>
+
+<ul>
+<li>Siempre hay al menos una acción posible.</li>
+<li>La cordura está entre 0 y su máximo.</li>
+<li>No se puede craftear sin todos los ingredientes.</li>
+<li>Un punto de loot vaciado no vuelve a dar lo mismo.</li>
+</ul>
+
+<h2 id="abierto">Abierto</h2>
+
+<ul>
+<li>Qué hay al salir del penthouse: primera planta a explorar y cómo se &ldquo;asegura&rdquo; una planta.</li>
+<li>Números concretos (duración de la llama, % de rotura, drenaje de cordura).</li>
+<li>Muerte roguelite (persistencia entre partidas) como idea para v2.</li>
+</ul>

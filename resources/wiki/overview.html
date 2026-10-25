@@ -2,7 +2,21 @@
 
 <hr>
 
-<p>GrimWorld is a game made with Godot 4.7. This page will describe the game once its design is written.</p>
+<p>GrimWorld is a narrative idle game in the style of A Dark Room. You wake up in the dark, in an empty penthouse at the top of an unfinished skyscraper, and slowly uncover a world that ended without explanation.</p>
+
+<p>This repository is a prototype in Godot 4.7 used to validate the design. A standalone engine will be extracted from it later, so the prototype follows the engine architecture instead of the usual Godot style.</p>
+
+<h2 id="architecture">Architecture</h2>
+
+<hr>
+
+<ul>
+<li><code>state = fold(initial_state, events)</code>: state only changes by applying events.</li>
+<li>Applying an event never uses randomness. The resolver rolls the dice first and the event stores the result, including the new position of the generator.</li>
+<li>The seeded generator lives in the state, so the same seed and the same actions always give the same game.</li>
+<li>Content lives in <code>data/game.json</code> and is validated when it is loaded.</li>
+<li>Godot only paints the state and emits <code>action_requested</code>; the <code>GameManager</code> autoload resolves actions and emits <code>STATE_CHANGED</code>.</li>
+</ul>
 
 <h2 id="project-layout">Project layout</h2>
 
@@ -18,23 +32,50 @@
 
 <tbody>
 <tr>
-<td><code>managers/</code></td>
-<td>Central managers that own game state and emit signals.</td>
+<td><code>engine/</code></td>
+<td>Pure game logic with no nodes: state, events, reducer, resolver.</td>
 </tr>
 
 <tr>
 <td><code>models/</code></td>
-<td>Data classes with static <code>from(...)</code> factories.</td>
+<td>Game data classes built and validated from JSON.</td>
+</tr>
+
+<tr>
+<td><code>managers/</code></td>
+<td>The <code>GameManager</code> autoload that owns the event log.</td>
+</tr>
+
+<tr>
+<td><code>ui/</code></td>
+<td>Scenes and scripts that paint the state.</td>
+</tr>
+
+<tr>
+<td><code>data/</code></td>
+<td>Game content: texts, actions, probabilities.</td>
+</tr>
+
+<tr>
+<td><code>tests/</code></td>
+<td>Engine and data tests with fixed seeds, plus a small test runner.</td>
 </tr>
 
 <tr>
 <td><code>constants/</code></td>
-<td>Shared constants and enums.</td>
-</tr>
-
-<tr>
-<td><code>engine/</code></td>
-<td>Pure game logic, independent from scenes and nodes.</td>
+<td>Shared constants, empty for now.</td>
 </tr>
 </tbody>
 </table>
+
+<h2 id="design-documents">Design documents</h2>
+
+<hr>
+
+<p>The game design, the domain model and the decision records are written in Spanish:</p>
+
+<ul>
+<li><a href="./game-design">Game design</a></li>
+<li><a href="./domain">Domain model</a></li>
+<li><a href="./adr/0001-lenguaje-rust">ADR 0001 - Rust</a> (replaced) and <a href="./adr/0002-lenguaje-go">ADR 0002 - Go</a></li>
+</ul>

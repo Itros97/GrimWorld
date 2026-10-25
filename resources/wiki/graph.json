@@ -1,1 +1,1 @@
-{"overview":[]}
+{"adr/0001-lenguaje-rust":["adr/0002-lenguaje-go"],"adr/0002-lenguaje-go":["adr/0001-lenguaje-rust","domain"],"domain":[],"game-design":[],"overview":["adr/0001-lenguaje-rust","adr/0002-lenguaje-go","domain","game-design"]}

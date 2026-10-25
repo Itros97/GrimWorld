@@ -1,0 +1,181 @@
+<h1 id="modelo-de-dominio-del-motor-borrador-v1">Modelo de dominio del motor (borrador v1)</h1>
+
+<hr>
+
+<h2 id="principio">Principio</h2>
+
+<p><code>state = fold(initial_state, events)</code>.
+El estado nunca se modifica directamente: solo aplicando eventos.
+Guardar = guardar la semilla + la lista de eventos. Deshacer y replays salen de ahí.</p>
+
+<h2 id="flujo-de-una-acción">Flujo de una acción</h2>
+<pre><code>jugador elige acción
+  → validar (¿está disponible?, ¿hay recursos?)        [puro, sin RNG]
+  → resolver (tirar dados, aplicar perks, calcular resultado) [usa RNG]
+  → emitir eventos con el resultado ya decidido
+  → aplicar eventos al estado                          [puro, sin RNG]
+</code></pre>
+
+<p><strong>Regla clave: aplicar un evento nunca usa el RNG.</strong> El azar se resuelve antes y el evento
+guarda el resultado (<code>success: true</code>). Así el replay es trivial y aplicar es una función pura.</p>
+
+<h2 id="estado">Estado</h2>
+
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Qué guarda</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>rng</code></td>
+<td>Semilla y posición actual</td>
+</tr>
+
+<tr>
+<td><code>tick</code></td>
+<td>Tiempo de juego</td>
+</tr>
+
+<tr>
+<td><code>resources</code></td>
+<td>Cantidades: madera, tela, alcohol, comida, balas, cordura&hellip;</td>
+</tr>
+
+<tr>
+<td><code>items</code></td>
+<td>Objetos con estado propio: mechero (durabilidad), antorcha, armas&hellip;</td>
+</tr>
+
+<tr>
+<td><code>flags</code></td>
+<td>Pistas, puntos looteados, escenas vistas, elecciones hechas</td>
+</tr>
+
+<tr>
+<td><code>location</code></td>
+<td>Planta actual</td>
+</tr>
+
+<tr>
+<td><code>locations</code></td>
+<td>Estado por planta (puntos de loot vaciados, descubierta o no)</td>
+</tr>
+
+<tr>
+<td><code>background</code></td>
+<td>Trasfondo oculto</td>
+</tr>
+
+<tr>
+<td><code>active_scene</code></td>
+<td>Escena o decisión abierta, si la hay</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="eventos">Eventos</h2>
+
+<table>
+<thead>
+<tr>
+<th>Evento</th>
+<th>Cuándo</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>GameStarted { seed }</code></td>
+<td>Inicio de partida</td>
+</tr>
+
+<tr>
+<td><code>BackgroundAssigned { id }</code></td>
+<td>Inicio, tras resolver el trasfondo</td>
+</tr>
+
+<tr>
+<td><code>ActionAttempted { action, success }</code></td>
+<td>Acción con azar (encender mechero, buscar a oscuras&hellip;)</td>
+</tr>
+
+<tr>
+<td><code>ResourceChanged { id, delta }</code></td>
+<td>Cualquier cambio de cantidad</td>
+</tr>
+
+<tr>
+<td><code>ItemGained { id }</code> / <code>ItemBroken { id }</code></td>
+<td>Ganar o perder un objeto</td>
+</tr>
+
+<tr>
+<td><code>ItemCrafted { recipe }</code></td>
+<td>Crafteo (consume entradas, da salidas)</td>
+</tr>
+
+<tr>
+<td><code>SceneEntered { id }</code></td>
+<td>Se abre una escena o decisión</td>
+</tr>
+
+<tr>
+<td><code>ChoiceMade { scene, option, outcome }</code></td>
+<td>El jugador elige y se resuelve el resultado</td>
+</tr>
+
+<tr>
+<td><code>FlagSet { id }</code></td>
+<td>Pista, punto looteado, escena vista&hellip;</td>
+</tr>
+
+<tr>
+<td><code>LocationChanged { from, to }</code></td>
+<td>Rapel entre plantas</td>
+</tr>
+
+<tr>
+<td><code>Ticked { n }</code></td>
+<td>Paso del tiempo (incluye progreso offline: N ticks)</td>
+</tr>
+
+<tr>
+<td><code>PlayerCollapsed</code></td>
+<td>Cordura a 0</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="reglas-que-viven-en-datos-no-en-código">Reglas que viven en datos (no en código)</h2>
+
+<ul>
+<li>Acciones: coste, cooldown, probabilidad, condición de disponibilidad.</li>
+<li>Recetas: entradas → salidas.</li>
+<li>Escenas: texto, opciones, resultados ponderados.</li>
+<li>Condiciones: <code>recurso &gt;= N</code>, flag activo, planta actual, trasfondo.</li>
+<li>Perks: modificadores sobre probabilidad, cantidad o coste.</li>
+<li>Drenaje por tick según contexto (a oscuras / con luz).</li>
+</ul>
+
+<h2 id="invariantes">Invariantes</h2>
+
+<ul>
+<li>Siempre hay al menos una acción posible.</li>
+<li>Ningún recurso baja de 0; la cordura no supera su máximo.</li>
+<li>No se puede craftear sin todas las entradas.</li>
+<li>Un punto de loot vaciado no vuelve a dar lo mismo.</li>
+<li>Misma semilla + mismas acciones del jugador = mismo estado final.</li>
+</ul>
+
+<h2 id="decisiones-abiertas">Decisiones abiertas</h2>
+
+<ol>
+<li><strong>Granularidad</strong>: ¿<code>ChoiceMade</code> lleva sus efectos dentro, o emite además <code>ResourceChanged</code>/<code>FlagSet</code> por cada efecto?
+Propuesta: eventos pequeños por efecto. El log se lee mejor y <code>apply</code> queda simple.</li>
+<li><strong>Perks</strong>: se aplican al <strong>resolver</strong> (antes del evento), nunca al aplicar. Coherente con la regla del azar.</li>
+<li><strong>Formato de datos</strong> (ADR 0003): pendiente de escribir el inicio del juego en formato.</li>
+</ol>

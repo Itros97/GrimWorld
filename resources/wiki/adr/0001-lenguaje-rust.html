@@ -1,0 +1,60 @@
+<h1 id="0001-rust-como-lenguaje-del-motor">0001 - Rust como lenguaje del motor</h1>
+
+<hr>
+
+<p><strong>Estado</strong>: Reemplazado por <a href="./adr/0002-lenguaje-go">0002 - Go como lenguaje del motor</a></p>
+
+<h2 id="contexto">Contexto</h2>
+
+<p>El motor es un núcleo de lógica pura: estado + acciones como eventos, con guardado,
+deshacer y replays, y juegos definidos por datos. Debe ser determinista y ejecutarse
+en varios frontends: terminal (v1), web vía WebAssembly (v2) y 2D con sprites (v3).
+Además es un proyecto de portfolio y de aprendizaje: debe demostrar diseño de
+arquitectura en un segundo lenguaje distinto a mi stack habitual (Kotlin/Spring).</p>
+
+<h2 id="opciones">Opciones</h2>
+
+<ol>
+<li><strong>Rust</strong>
+
+<ul>
+<li>+ <code>enum</code> con datos y <code>match</code> exhaustivo: modelo de eventos natural y verificado por el compilador.</li>
+<li>+ WebAssembly de primera clase, binarios pequeños.</li>
+<li>+ Ecosistema adecuado: <code>serde</code> + <code>ron</code> (datos), <code>ratatui</code> (terminal), <code>macroquad</code> (2D).</li>
+<li>+ Ownership desincentiva el estado mutable compartido, alineado con event sourcing.</li>
+<li>+ Lenguaje con mucha proyección; señal fuerte en portfolio.</li>
+<li>− Curva de aprendizaje alta; no conozco el lenguaje.</li>
+<li>− Invita a sobreingeniería (traits genéricos, macros, ECS).</li>
+</ul></li>
+<li><strong>Kotlin</strong>
+
+<ul>
+<li>+ Lo domino; desarrollo rápido.</li>
+<li>+ <code>sealed class</code> permite modelar eventos bien.</li>
+<li>− Kotlin/Wasm y frontends de terminal/2D menos maduros.</li>
+<li>− No aporta un segundo lenguaje al portfolio.</li>
+</ul></li>
+<li><strong>Go</strong>
+
+<ul>
+<li>+ Curva baja; código explícito y fácil de revisar.</li>
+<li>+ <code>bubbletea</code> (terminal) y Ebitengine (2D + Wasm) muy buenos.</li>
+<li>− Sin tipos suma: eventos con interfaces + <code>switch</code> no exhaustivo.</li>
+<li>− Binarios Wasm más pesados.</li>
+</ul></li>
+</ol>
+
+<h2 id="decisión">Decisión</h2>
+
+<p>Rust.</p>
+
+<h2 id="consecuencias">Consecuencias</h2>
+
+<ul>
+<li>Modelo de eventos y estado expresado con tipos y comprobado en compilación.</li>
+<li>Un mismo núcleo sirve a terminal, web y 2D.</li>
+<li>Aprendo un segundo lenguaje con mucha proyección.</li>
+<li>Arranque más lento: Rust Book (cap. 1-10) y Rustlings antes del <code>core</code>.</li>
+<li>Mientras aprendo, el código del <code>core</code> lo escribo yo o lo reviso línea a línea antes de aceptarlo.</li>
+<li>Disciplina contra la sobreingeniería: structs, enums y funciones en v1; nada que no justifique en una frase.</li>
+</ul>
