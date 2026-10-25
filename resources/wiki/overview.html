@@ -1,0 +1,40 @@
+<h1 id="overview">Overview</h1>
+
+<hr>
+
+<p>GrimWorld is a game made with Godot 4.7. This page will describe the game once its design is written.</p>
+
+<h2 id="project-layout">Project layout</h2>
+
+<hr>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>managers/</code></td>
+<td>Central managers that own game state and emit signals.</td>
+</tr>
+
+<tr>
+<td><code>models/</code></td>
+<td>Data classes with static <code>from(...)</code> factories.</td>
+</tr>
+
+<tr>
+<td><code>constants/</code></td>
+<td>Shared constants and enums.</td>
+</tr>
+
+<tr>
+<td><code>engine/</code></td>
+<td>Pure game logic, independent from scenes and nodes.</td>
+</tr>
+</tbody>
+</table>
