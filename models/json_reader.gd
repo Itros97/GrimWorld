@@ -2,6 +2,17 @@ class_name JsonReader
 extends RefCounted
 ## Reads typed fields from parsed JSON; every wrong field appends an error naming its path.
 
+## Root object of the JSON text; appends an error and returns an empty one when it is not valid.
+static func parse_object(json_text : String, errors : Array[String]) -> Dictionary:
+	var json := JSON.new()
+	if json.parse(json_text) != OK:
+		errors.append("line %d: %s" % [json.get_error_line(), json.get_error_message()])
+		return {}
+	if not json.data is Dictionary:
+		errors.append("root: expected an object")
+		return {}
+	return json.data
+
 ## Path of a field inside its parent, e.g. "actions[0].chance".
 static func field_path(path : String, key : String) -> String:
 	return key if path.is_empty() else "%s.%s" % [path, key]

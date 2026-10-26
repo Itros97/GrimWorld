@@ -9,15 +9,10 @@ var actions : Array[ActionData] = []
 ## Parses and validates the JSON text; the result holds every error found, with its field path.
 static func parse(json_text : String) -> LoadResult:
 	var errors : Array[String] = []
-	var json := JSON.new()
-	if json.parse(json_text) != OK:
-		errors.append("line %d: %s" % [json.get_error_line(), json.get_error_message()])
+	var dict := JsonReader.parse_object(json_text, errors)
+	if not errors.is_empty():
 		return LoadResult.new(null, errors)
-	if not json.data is Dictionary:
-		errors.append("root: expected an object")
-		return LoadResult.new(null, errors)
-	var game := from(json.data, errors)
-	return LoadResult.new(game, errors)
+	return LoadResult.new(from(dict, errors), errors)
 
 ## Builds the game from its root JSON object; appends to errors every field that is wrong.
 static func from(dict : Dictionary, errors : Array[String]) -> GameData:

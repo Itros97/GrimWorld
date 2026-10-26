@@ -18,10 +18,11 @@ This is the Godot 4.7 prototype that validates the design before the engine is e
 I write most of my code by hand, so I want to be clear about this project: **it was written by an
 AI assistant (Claude, by Anthropic) under my direction, in October 2026.** I decided what to build
 and how it should behave; the AI wrote the project skeleton, the code, the tests and the docs.
+The audio is by other people, see [Licence](#licence).
 Every commit made this way carries a `Co-Authored-By: Claude` line.
 
-**Status: pending thorough review.** Phase 1 (lighting the lighter) runs in Godot 4.7.2 and its 25 engine
-and data tests pass.
+**Status: pending thorough review.** Phase 1 (lighting the lighter) runs in Godot 4.7.2 and its 34 engine,
+data, credits and sound cue tests pass.
 I have not yet reviewed it line by line. Treat it as a working draft, not as code I vouch for.
 
 > ⚠️ **Warning:** an early experiment, **not ready to play**. Everything will change.
@@ -55,3 +56,12 @@ godot --headless --import && godot --headless -s tests/run_tests.gd    # run the
 ## Licence
 
 MIT, see [LICENSE](LICENSE).
+
+Third-party audio, also credited in the game (*Créditos*). The files are not in the repository:
+download them and save them with these names to hear the game; without them it runs silent.
+
+| File | Work | Author | Licence |
+|---|---|---|---|
+| `assets/music/main_screen.ogg` | [Granular organic glitches over an electromagnetic drone background](https://freesound.org/s/869606/) | bassimat | CC0 |
+| `assets/sounds/lit_ambience.mp3` | [Space drone ambience 01](https://freesound.org/s/425984/) | magmisoundtracks | CC0 |
+| `assets/sounds/lighter.wav` | Lighter flint | unknown | unknown, to be replaced |

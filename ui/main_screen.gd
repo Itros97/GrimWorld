@@ -3,8 +3,11 @@ extends MarginContainer
 
 @onready var _message_label : Label = %MessageLabel
 @onready var _action_list : VBoxContainer = %ActionList
+@onready var _credits_button : Button = %CreditsButton
+@onready var _credits_panel : PanelContainer = %CreditsPanel
 
 func _ready() -> void:
+	_credits_button.pressed.connect(_credits_panel.show)
 	GameManager.STATE_CHANGED.connect(_render)
 	_render(GameManager.state)
 
