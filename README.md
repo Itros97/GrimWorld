@@ -62,6 +62,6 @@ download them and save them with these names to hear the game; without them it r
 
 | File | Work | Author | Licence |
 |---|---|---|---|
-| `assets/music/main_screen.ogg` | [Granular organic glitches over an electromagnetic drone background](https://freesound.org/s/869606/) | bassimat | CC0 |
 | `assets/sounds/lit_ambience.mp3` | [Space drone ambience 01](https://freesound.org/s/425984/) | magmisoundtracks | CC0 |
 | `assets/sounds/zippo_open.wav`, `zippo_close.wav` | [Zippo lighter open close 2](https://freesound.org/s/838151/), split in two | RSSC | CC0 |
+| `assets/sounds/wind_loop.ogg` | [Medium Wind, Constant 2](https://freesound.org/s/760241/), 90 s cut made into a loop | jackstraton | CC0 |

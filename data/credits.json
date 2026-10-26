@@ -2,13 +2,6 @@
 	"title": "Créditos y agradecimientos",
 	"credits": [
 		{
-			"role": "Música",
-			"work": "Granular organic glitches over an electromagnetic drone background",
-			"author": "bassimat",
-			"source": "Freesound",
-			"licence": "CC0"
-		},
-		{
 			"role": "Ambiente",
 			"work": "Space drone ambience 01",
 			"author": "magmisoundtracks",
@@ -21,7 +14,14 @@
 			"author": "RSSC",
 			"source": "Freesound",
 			"licence": "CC0"
+		},
+		{
+			"role": "Viento",
+			"work": "Medium Wind, Constant 2",
+			"author": "jackstraton",
+			"source": "Freesound",
+			"licence": "CC0"
 		}
 	],
-	"thanks": "Gracias a bassimat, magmisoundtracks y RSSC por compartir su trabajo."
+	"thanks": "Gracias a magmisoundtracks, RSSC y jackstraton por compartir su trabajo."
 }
