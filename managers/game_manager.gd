@@ -2,6 +2,7 @@ extends Node
 ## Autoload that orchestrates the game: owns the event log, resolves requested actions and broadcasts the new state.
 
 signal action_requested(action_id : StringName)
+signal EVENTS_RECORDED(events : Array[Events.Event])
 signal STATE_CHANGED(state : GameState)
 
 const DATA_PATH := "res://data/game.json"
@@ -36,10 +37,11 @@ func _read_seed() -> int:
 func _on_action_requested(action_id : StringName) -> void:
 	_record(_resolver.resolve(state, action_id, GameRng.from_state(state)))
 
-## Appends the events to the log, applies them and notifies listeners.
+## Appends the events to the log, applies them and notifies listeners of both.
 func _record(events : Array[Events.Event]) -> void:
 	if events.is_empty():
 		return
 	_events.append_array(events)
 	state = StateReducer.fold(state, events)
+	EVENTS_RECORDED.emit(events)
 	STATE_CHANGED.emit(state)

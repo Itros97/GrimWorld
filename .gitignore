@@ -25,3 +25,7 @@ Thumbs.db
 # Environment
 .env*
 !.env.example
+
+# Audio (third-party files kept out of the repository, see README)
+assets/music/
+assets/sounds/

@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.7")
 [autoload]
 
 GameManager="*res://managers/game_manager.gd"
+AudioManager="*res://managers/audio_manager.gd"
 
 [rendering]
 
