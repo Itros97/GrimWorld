@@ -21,8 +21,8 @@ and how it should behave; the AI wrote the project skeleton, the code, the tests
 The audio is by other people, see [Licence](#licence).
 Every commit made this way carries a `Co-Authored-By: Claude` line.
 
-**Status: pending thorough review.** Phase 1 (lighting the lighter) runs in Godot 4.7.2 and its 34 engine,
-data, credits and sound cue tests pass.
+**Status: pending thorough review.** Phase 1 (lighting the lighter) runs in Godot 4.7.2 and its 43 engine,
+data, credits, light level and sound cue tests pass.
 I have not yet reviewed it line by line. Treat it as a working draft, not as code I vouch for.
 
 > ⚠️ **Warning:** an early experiment, **not ready to play**. Everything will change.

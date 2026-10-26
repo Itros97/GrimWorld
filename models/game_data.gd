@@ -1,10 +1,12 @@
 class_name GameData
 extends RefCounted
-## Game content loaded from data/game.json: texts and actions. Validated on load.
+## Game content loaded from data/game.json: texts, actions and light levels. Validated on load.
 
 var start_message : StringName
 var messages : Dictionary[StringName, String] = {}
 var actions : Array[ActionData] = []
+var darkness : LightLevelData
+var light_levels : Array[LightLevelData] = []
 
 ## Parses and validates the JSON text; the result holds every error found, with its field path.
 static func parse(json_text : String) -> LoadResult:
@@ -28,6 +30,10 @@ static func from(dict : Dictionary, errors : Array[String]) -> GameData:
 		if game.find_action(action.id) != null:
 			errors.append("%s.id: duplicate action id '%s'" % [path, action.id])
 		game.actions.append(action)
+	game.darkness = LightLevelData.look_from(JsonReader.read_dict(dict, "darkness", "", errors), "darkness", errors)
+	var levels := JsonReader.read_optional_dict_array(dict, "light_levels", "", errors)
+	for i in levels.size():
+		game.light_levels.append(LightLevelData.from(levels[i], "light_levels[%d]" % i, errors))
 	game._check_message_references(errors)
 	return game
 
@@ -37,6 +43,13 @@ func find_action(id : StringName) -> ActionData:
 		if action.id == id:
 			return action
 	return null
+
+## Brightest light level whose flag is set (the last one in the list), or darkness when none is.
+func light_level(state : GameState) -> LightLevelData:
+	for i in range(light_levels.size() - 1, -1, -1):
+		if state.has_flag(light_levels[i].flag):
+			return light_levels[i]
+	return darkness
 
 ## Text of the message with this id; fails loud when the id is unknown.
 func message(id : StringName) -> String:

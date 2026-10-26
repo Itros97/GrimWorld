@@ -37,6 +37,18 @@ static func read_number(dict : Dictionary, key : String, path : String, errors :
 	errors.append("%s: expected a number between %s and %s, got %s" % [field_path(path, key), min_value, max_value, value])
 	return min_value
 
+## Number field that may be missing; 0 when it is.
+static func read_optional_number(dict : Dictionary, key : String, path : String, errors : Array[String], min_value : float, max_value : float) -> float:
+	return read_number(dict, key, path, errors, min_value, max_value) if dict.has(key) else 0.0
+
+## Colour field written as HTML hex, e.g. "#2a1608".
+static func read_color(dict : Dictionary, key : String, path : String, errors : Array[String]) -> Color:
+	var value : Variant = dict.get(key)
+	if value is String and Color.html_is_valid(value):
+		return Color.html(value)
+	errors.append("%s: expected a hex colour like \"#2a1608\", got %s" % [field_path(path, key), value])
+	return Color.BLACK
+
 ## Object field.
 static func read_dict(dict : Dictionary, key : String, path : String, errors : Array[String]) -> Dictionary:
 	var value : Variant = dict.get(key)
@@ -54,6 +66,12 @@ static func read_dict_array(dict : Dictionary, key : String, path : String, erro
 		return items
 	items.assign(value)
 	return items
+
+## Array field of objects that may be missing; empty when it is.
+static func read_optional_dict_array(dict : Dictionary, key : String, path : String, errors : Array[String]) -> Array[Dictionary]:
+	if not dict.has(key):
+		return [] as Array[Dictionary]
+	return read_dict_array(dict, key, path, errors)
 
 ## Non-empty array field whose items are all non-empty strings.
 static func read_id_array(dict : Dictionary, key : String, path : String, errors : Array[String]) -> Array[StringName]:

@@ -8,6 +8,10 @@
 		"lighter_fail_3": "El pulgar resbala sobre la piedra.",
 		"lighter_fail_4": "Chasquido. Sigue oscuro."
 	},
+	"darkness": { "background": "#050505", "text": "#dfdfdf", "grain": 0.06 },
+	"light_levels": [
+		{ "flag": "lighter_lit", "background": "#2a1608", "text": "#f2e6d8", "grain": 0.04, "flicker": 0.15 }
+	],
 	"actions": [
 		{
 			"id": "light_lighter",

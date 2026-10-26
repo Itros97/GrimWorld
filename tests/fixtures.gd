@@ -13,6 +13,7 @@ static func game_dict(chance : float = 0.25, failure_ids : Array = ["fail_1", "f
 	return {
 		"start_message": "dark",
 		"messages": messages,
+		"darkness": { "background": "#050505", "text": "#dfdfdf" },
 		"actions": [{
 			"id": String(ACTION_ID),
 			"label": "Light lighter",
