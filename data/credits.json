@@ -14,7 +14,14 @@
 			"author": "magmisoundtracks",
 			"source": "Freesound",
 			"licence": "CC0"
+		},
+		{
+			"role": "Mechero",
+			"work": "Zippo lighter open close 2",
+			"author": "RSSC",
+			"source": "Freesound",
+			"licence": "CC0"
 		}
 	],
-	"thanks": "Gracias a bassimat y a magmisoundtracks por compartir su trabajo."
+	"thanks": "Gracias a bassimat, magmisoundtracks y RSSC por compartir su trabajo."
 }

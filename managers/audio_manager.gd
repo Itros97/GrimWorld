@@ -5,7 +5,7 @@ extends Node
 const MUSIC_PATH := "res://assets/music/main_screen.ogg"
 const LIT_AMBIENCE_PATH := "res://assets/sounds/lit_ambience.mp3"
 const FLINT_PATHS : Array[String] = [
-	"res://assets/sounds/lighter.wav",
+	"res://assets/sounds/zippo_open.wav",
 ]
 
 const MUSIC_BUS := &"Music"
@@ -14,6 +14,7 @@ const AMBIENT_BUS := &"Ambient"
 
 const FLINT_PITCH_SPREAD := 1.1
 const LIGHTER_LIT_FADE_SECONDS := 1.5
+const LIT_AMBIENCE_DB := -8.0
 const SILENT_DB := -40.0
 
 var _music : AudioStreamPlayer
@@ -40,7 +41,7 @@ func _crossfade_to_lit_ambience() -> void:
 	_lit_ambience.volume_db = SILENT_DB
 	_lit_ambience.play()
 	var tween := create_tween().set_parallel()
-	tween.tween_property(_lit_ambience, "volume_db", 0.0, LIGHTER_LIT_FADE_SECONDS)
+	tween.tween_property(_lit_ambience, "volume_db", LIT_AMBIENCE_DB, LIGHTER_LIT_FADE_SECONDS)
 	tween.tween_property(_music, "volume_db", SILENT_DB, LIGHTER_LIT_FADE_SECONDS)
 	tween.chain().tween_callback(_music.stop)
 
